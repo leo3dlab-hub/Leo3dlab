@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leo3D Lab - Galeria</title>
+    <title>Leo3D Lab</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -14,15 +14,15 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f4f7f6;
             margin: 0;
-            overflow-x: hidden; /* Impede barra de rolagem horizontal na janela */
+            overflow-x: hidden; 
         }
 
-        /* O Wrapper segura as duas telas lado a lado */
+        /* O Wrapper segura as TRES telas lado a lado */
         .wrapper {
             display: flex;
-            width: 200vw; /* Largura dupla para caber 2 telas */
+            width: 300vw;
             height: 100vh;
-            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Animação suave */
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         /* Cada tela ocupa 100% da largura da janela */
@@ -34,59 +34,13 @@
             justify-content: center;
             align-items: center;
             position: relative;
-        }
-
-        /* --- TELA 1: HOME --- */
-        .home-container {
-            background-color: #ffffff;
-            padding: 40px 60px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 90%;
-            width: 350px;
-            position: relative;
-        }
-
-        h1 {
-            color: #5d5dff;
-            margin-bottom: 10px;
-            font-size: 2em;
-        }
-        
-        p.subtitle {
-            color: #777;
-            margin-bottom: 30px;
-            font-size: 0.9em;
-        }
-
-        .instagram-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px rgba(200, 40, 60, 0.3);
-            width: 100%;
+            padding: 20px;
             box-sizing: border-box;
         }
 
-        .instagram-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(220, 40, 67, 0.5);
-        }
-
-        .instagram-button i { margin-right: 10px; font-size: 1.3em; }
-
-        /* Seta para a direita */
-        .arrow-right {
-            position: absolute;
-            right: 30px;
+        /* --- CONTROLES DE NAVEGAÇÃO --- */
+        .arrow {
+            position: fixed;
             top: 50%;
             transform: translateY(-50%);
             background: white;
@@ -96,18 +50,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
             cursor: pointer;
             color: #5d5dff;
             font-size: 1.5em;
             transition: all 0.3s;
-            animation: bounceRight 2s infinite;
+            z-index: 100;
         }
-        
-        .arrow-right:hover {
-            background: #5d5dff;
-            color: white;
-        }
+
+        .arrow:hover { background: #5d5dff; color: white; }
+        .arrow-left { left: 10px; opacity: 0; pointer-events: none; }
+        .arrow-right { right: 10px; animation: bounceRight 2s infinite; }
 
         @keyframes bounceRight {
             0%, 20%, 50%, 80%, 100% {transform: translateY(-50%) translateX(0);}
@@ -115,94 +68,173 @@
             60% {transform: translateY(-50%) translateX(-5px);}
         }
 
-        /* --- TELA 2: GALERIA --- */
-        .gallery-screen {
-            background-color: #f0f2f5;
-        }
-
-        .gallery-header {
-            position: absolute;
-            top: 40px;
+        /* --- TELA 1: HOME --- */
+        .home-screen { background-color: #f4f7f6; }
+        .home-container {
+            background-color: #ffffff;
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 100%;
+            width: 350px;
         }
+        h1 { color: #5d5dff; margin-bottom: 10px; font-size: 2em; }
+        p.subtitle { color: #777; margin-bottom: 30px; font-size: 0.9em; }
+        .instagram-button {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+            color: white; padding: 15px 30px; text-decoration: none;
+            border-radius: 50px; font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(200, 40, 60, 0.3); width: 100%; box-sizing: border-box;
+        }
+        .instagram-button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(220, 40, 67, 0.5); }
+        .instagram-button i { margin-right: 10px; font-size: 1.3em; }
+
+        /* --- TELA 2: GALERIA DE REVIEWS --- */
+        .gallery-screen { background-color: #f0f2f5; }
+        .gallery-header { position: absolute; top: 40px; text-align: center; width: 100%; }
         .gallery-header h2 { color: #333; margin: 0; }
         .gallery-header p { color: #666; font-size: 0.9em; margin-top: 5px;}
-
-        /* Container dos cartões (Scroll Horizontal) */
         .cards-container {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            padding: 20px 40px;
-            max-width: 100%;
-            width: 100%;
-            box-sizing: border-box;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
+            display: flex; gap: 20px; overflow-x: auto; padding: 20px 40px;
+            max-width: 100%; width: 100%; box-sizing: border-box;
+            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
         }
-
-        /* Ocultar barra de rolagem feia */
         .cards-container::-webkit-scrollbar { height: 8px; }
         .cards-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-
         .card {
-            background: white;
-            min-width: 300px;
-            max-width: 300px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            scroll-snap-align: center;
-            display: flex;
-            flex-direction: column;
+            background: white; min-width: 300px; max-width: 300px;
+            border-radius: 15px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); scroll-snap-align: center;
         }
-
-        .card-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            background-color: #eee;
-        }
-
-        .card-body {
-            padding: 20px;
-            text-align: left;
-        }
-
+        .card-img { width: 100%; height: 200px; object-fit: cover; background-color: #eee; }
+        .card-body { padding: 20px; text-align: left; }
         .stars { color: #ffc107; font-size: 0.9em; margin-bottom: 10px; }
         .user-name { font-weight: 700; font-size: 0.9em; color: #333; display: block; margin-bottom: 5px; }
         .review-text { font-size: 0.85em; color: #555; line-height: 1.5; }
 
-        /* Botão Voltar */
-        .back-arrow {
-            position: absolute;
-            left: 30px;
-            top: 40px;
-            font-size: 1.5em;
-            color: #333;
-            cursor: pointer;
-            z-index: 10;
+        /* --- TELA 3: CATÁLOGO --- */
+        .catalog-screen { background-color: #f4f7f6; }
+        .catalog-container {
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        .catalog-item {
             background: white;
-            padding: 10px;
-            border-radius: 50%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 280px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .catalog-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .item-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .item-title {
+            padding: 15px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
         }
 
-        /* Responsividade para celular */
-        @media (max-width: 600px) {
-            .arrow-right { right: 10px; width: 40px; height: 40px; font-size: 1.2em; }
-            .home-container { width: 80%; padding: 30px; }
-            .cards-container { padding: 20px 20px; }
-            .card { min-width: 85vw; }
+        /* --- MODAL (Janela Pop-up para o Álbum) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 80%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .modal-images {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-images img {
+            max-width: 300px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .modal-images img:hover {
+            transform: scale(1.05);
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .catalog-container { gap: 20px; padding: 0; }
+            .catalog-item { width: 45%; }
+            .modal-content { width: 90%; margin: 5% auto; }
+            .modal-images { flex-direction: column; align-items: center; }
+            .modal-images img { max-width: 100%; height: auto; }
         }
     </style>
 </head>
 <body>
 
+<div class="arrow arrow-left" id="arrowLeft" onclick="slideScreen('left')">
+    <i class="fas fa-arrow-left"></i>
+</div>
+<div class="arrow arrow-right" id="arrowRight" onclick="slideScreen('right')">
+    <i class="fas fa-arrow-right"></i>
+</div>
+
 <div class="wrapper" id="mainWrapper">
     
-    <div class="screen home-screen">
+    <div class="screen home-screen" data-screen="0">
         <div class="home-container">
             <h1>Leo3D Lab</h1>
             <p class="subtitle">Impressão 3D e Modelagem Exclusiva</p>
@@ -211,20 +243,12 @@
                 <i class="fab fa-instagram"></i> Abra nosso Instagram
             </a>
         </div>
-
-        <div class="arrow-right" onclick="slideScreen('right')">
-            <i class="fas fa-chevron-right"></i>
-        </div>
     </div>
 
-    <div class="screen gallery-screen">
-        <div class="back-arrow" onclick="slideScreen('left')">
-            <i class="fas fa-arrow-left"></i>
-        </div>
-
+    <div class="screen gallery-screen" data-screen="1">
         <div class="gallery-header">
-            <h2>Nossos Clientes</h2>
-            <p>Deslize para ver os trabalhos</p>
+            <h2>⭐ Galeria de Reviews</h2>
+            <p>Deslize para ver os depoimentos reais dos nossos clientes</p>
         </div>
 
         <div class="cards-container">
@@ -276,20 +300,115 @@
 
         </div>
     </div>
+    
+    <div class="screen catalog-screen" data-screen="2">
+        <div class="gallery-header">
+            <h2>🖼️ Catálogo de Miniaturas Personalizadas</h2>
+            <p>Clique para ver o álbum completo de cada projeto.</p>
+        </div>
+        <div class="catalog-container">
+            
+            <div class="catalog-item" onclick="openModal('Milady (Estátua Pet)', 6, 8)">
+                <img src="foto6.jpg" alt="Miniatura Milady" class="item-image">
+                <div class="item-title">Milady (Estátua Pet)</div>
+            </div>
+
+            <div class="catalog-item" onclick="openModal('Ozzy Osbourne (Miniatura)', 9, 11)">
+                <img src="foto9.jpg" alt="Miniatura Ozzy Osbourne" class="item-image">
+                <div class="item-title">Ozzy Osbourne (Miniatura)</div>
+            </div>
+
+            <div class="catalog-item" onclick="openModal('Neto (Caricatura Humana)', 12, 14)">
+                <img src="foto12.jpg" alt="Miniatura Menino" class="item-image">
+                <div class="item-title">Neto (Caricatura Humana)</div>
+            </div>
+            
+            </div>
+    </div>
+
+</div>
+
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle" style="color: #5d5dff;"></h3>
+        <div id="modalImages" class="modal-images">
+            </div>
+    </div>
 </div>
 
 <script>
+    let currentScreen = 0; // 0 = Home, 1 = Reviews, 2 = Catálogo
+    const totalScreens = 3;
+    const wrapper = document.getElementById('mainWrapper');
+    const arrowLeft = document.getElementById('arrowLeft');
+    const arrowRight = document.getElementById('arrowRight');
+    const modal = document.getElementById('imageModal');
+    const modalImagesDiv = document.getElementById('modalImages');
+    const modalTitle = document.getElementById('modalTitle');
+
+    // Função principal para deslizar a tela
     function slideScreen(direction) {
-        const wrapper = document.getElementById('mainWrapper');
-        if (direction === 'right') {
-            // Move para a esquerda para mostrar a tela da direita
-            wrapper.style.transform = 'translateX(-100vw)';
-        } else {
-            // Volta ao início
-            wrapper.style.transform = 'translateX(0)';
+        if (direction === 'right' && currentScreen < totalScreens - 1) {
+            currentScreen++;
+        } else if (direction === 'left' && currentScreen > 0) {
+            currentScreen--;
+        }
+
+        wrapper.style.transform = `translateX(-${currentScreen * 100}vw)`;
+        updateArrows();
+    }
+
+    // Função para controlar a visibilidade das setas
+    function updateArrows() {
+        arrowLeft.style.opacity = currentScreen > 0 ? '1' : '0';
+        arrowLeft.style.pointerEvents = currentScreen > 0 ? 'auto' : 'none';
+
+        arrowRight.style.opacity = currentScreen < totalScreens - 1 ? '1' : '0';
+        arrowRight.style.pointerEvents = currentScreen < totalScreens - 1 ? 'auto' : 'none';
+        
+        if (currentScreen > 0) {
+            arrowRight.style.animation = 'none';
         }
     }
+
+    /**
+     * Função para abrir o modal de álbum
+     * @param {string} title - Título do álbum.
+     * @param {number} startNum - Número da primeira foto (ex: 6).
+     * @param {number} endNum - Número da última foto (ex: 8).
+     */
+    function openModal(title, startNum, endNum) {
+        modalTitle.textContent = title;
+        modalImagesDiv.innerHTML = ''; // Limpa imagens anteriores
+        
+        // Loop para inserir as imagens na sequência numérica
+        for (let i = startNum; i <= endNum; i++) {
+            const img = document.createElement('img');
+            img.src = `foto${i}.jpg`; // Usa o novo padrão: foto6.jpg, foto7.jpg, etc.
+            img.alt = `${title} Foto ${i}`;
+            modalImagesDiv.appendChild(img);
+        }
+
+        modal.style.display = 'block';
+    }
+
+    // Função para fechar o modal
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    // Fechar o modal clicando fora dele
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+    
+    // Inicializa as setas na primeira tela
+    updateArrows();
 </script>
 
 </body>
 </html>
+
