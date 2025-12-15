@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leo3D Lab - Site Completo</title>
+    <title>Leo3D Lab - Site Funcional</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -14,13 +14,14 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f4f7f6;
             margin: 0;
-            overflow-x: hidden; 
+            overflow-x: hidden; /* Garante que a barra de rolagem horizontal não apareça */
+            transition: background-color 0.5s;
         }
 
         /* O Wrapper segura as TRES telas lado a lado */
         .wrapper {
             display: flex;
-            width: 300vw;
+            width: 300vw; /* 3 telas de 100vw cada */
             height: 100vh;
             transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
@@ -38,7 +39,7 @@
             box-sizing: border-box;
         }
 
-        /* --- CONTROLES DE NAVEGAÇÃO --- */
+        /* --- CONTROLES DE NAVEGAÇÃO (Setas) --- */
         .arrow {
             position: fixed;
             top: 50%;
@@ -65,16 +66,15 @@
         /* ESTILO PARA SETAS DESATIVADAS */
         .arrow.disabled {
             opacity: 0.4;
-            pointer-events: none; /* Não permite clique */
+            pointer-events: none;
             cursor: default;
             box-shadow: none;
-            animation: none !important; /* Remove animação de bounce */
+            animation: none !important;
         }
         .arrow.disabled:hover {
             background: white;
             color: #5d5dff;
         }
-
 
         @keyframes bounceRight {
             0%, 20%, 50%, 80%, 100% {transform: translateY(-50%) translateX(0);}
@@ -102,14 +102,225 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 5px 15px rgba(200, 40, 60, 0.3); width: 100%; box-sizing: border-box;
         }
-        .instagram-button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(220, 40, 67, 0.5); }
         .instagram-button i { margin-right: 10px; font-size: 1.3em; }
 
         /* --- TELA 2: GALERIA DE REVIEWS --- */
         .gallery-screen { background-color: #f0f2f5; }
         .gallery-header { position: absolute; top: 40px; text-align: center; width: 100%; }
-        .gallery-header h2 { color: #333; margin: 0; }
-        .gallery-header p { color: #666; font-size: 0.9em; margin-top: 5px;}
+        .cards-container {
+            display: flex; gap: 20px; overflow-x: auto; padding: 20px 40px;
+            max-width: 100%; width: 100%; box-sizing: border-box;
+            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        }
+        .card { background: white; min-width: 300px; max-width: 300px; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); scroll-snap-align: center; }
+        .card-img { width: 100%; height: 200px; object-fit: cover; background-color: #eee; }
+        .card-body { padding: 20px; text-align: left; }
+        .stars { color: #ffc107; font-size: 0.9em; margin-bottom: 10px; }
+        .user-name { font-weight: 700; font-size: 0.9em; color: #333; display: block; margin-bottom: 5px; }
+        .review-text { font-size: 0.85em; color: #555; line-height: 1.5; }
+
+        /* --- TELA 3: CATÁLOGO --- */
+        .catalog-screen { background-color: #f4f7f6; }
+        .catalog-container {
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        .catalog-item {
+            background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden; width: 280px; text-align: center; cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .item-image { width: 100%; height: 250px; object-fit: cover; }
+        .item-title { padding: 15px; font-weight: 600; color: #333; font-size: 1.1em; }
+
+        /* --- MODAL (Janela Pop-up para o Álbum) --- */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            position: relative; background-color: #fefefe; margin: 10% auto; padding: 20px;
+            border-radius: 10px; max-width: 90%; width: 700px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .modal-images { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .modal-images img { max-width: 300px; height: 250px; object-fit: cover; border-radius: 8px; }
+        .close-button {
+            color: #aaa; position: absolute; top: 10px; right: 25px; font-size: 35px;
+            font-weight: bold; cursor: pointer; transition: color 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+<div class="arrow arrow-left disabled" id="arrowLeft" onclick="slideScreen('left')">
+    <i class="fas fa-arrow-left"></i>
+</div>
+<div class="arrow arrow-right" id="arrowRight" onclick="slideScreen('right')">
+    <i class="fas fa-arrow-right"></i>
+</div>
+
+<div class="wrapper" id="mainWrapper">
+    
+    <div class="screen home-screen" data-screen="0">
+        <div class="home-container">
+            <h1>Leo3D Lab</h1>
+            <p class="subtitle">Impressão 3D e Modelagem Exclusiva</p>
+            
+            <a href="https://www.instagram.com/leo3d_lab?igsh=MXE3NHJ3aGM1cHh5aA==" class="instagram-button" target="_blank">
+                <i class="fab fa-instagram"></i> Abra nosso Instagram
+            </a>
+        </div>
+    </div>
+
+    <div class="screen gallery-screen" data-screen="1">
+        <div class="gallery-header">
+            <h2>⭐ Galeria de Reviews</h2>
+            <p>Deslize para ver os depoimentos reais dos nossos clientes</p>
+        </div>
+
+        <div class="cards-container">
+            
+            <div class="card"><img src="foto1.jpg" alt="Estátua Pet Branco" class="card-img"><div class="card-body"><span class="user-name">paularodrigues.0708</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Veio perfeito! Nossa Milady nos deixou e o vendedor me prometeu uma estátua perfeita e veio idêntica."</p></div></div>
+            <div class="card"><img src="foto2.jpg" alt="Miniatura Ozzy" class="card-img"><div class="card-body"><span class="user-name">helcioam</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Parabéns ao vendedor. Além do acabamento ótimo, tirou todas as dúvidas. Melhor do que eu esperava. Nota 1.000!!!"</p></div></div>
+            <div class="card"><img src="foto3.jpg" alt="Caricatura Pet" class="card-img"><div class="card-body"><span class="user-name">6spa7yc34d</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Nota mil, idêntico, ficamos super emocionados, pois a caricatura é de um pet muito querido. Trabalho profissional!"</p></div></div>
+            <div class="card"><img src="foto4.jpg" alt="Boneco Menino" class="card-img"><div class="card-body"><span class="user-name">elizabethbeth156</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Eu amei, gratidão ao vendedor que foi super atencioso. Só elogios, amei agora vou fazer do outro neto, obrigada."</p></div></div>
+            <div class="card"><img src="foto5.jpg" alt="Boneco Rapaz" class="card-img"><div class="card-body"><span class="user-name">1di7kc7lrj</span><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="review-text">"Estou apaixonada por essa caricatura, rico em detalhes, ótimo produto e atendimento nota 1000. Super recomendo."</p></div></div>
+
+        </div>
+    </div>
+    
+    <div class="screen catalog-screen" data-screen="2">
+        <div class="gallery-header">
+            <h2>🖼️ Catálogo de Miniaturas Personalizadas</h2>
+            <p>Clique para ver o álbum completo de cada projeto.</p>
+        </div>
+        <div class="catalog-container">
+            
+            <div class="catalog-item" onclick="openModal('Milady (Estátua Pet)', 6, 8)">
+                <img src="foto6.jpg" alt="Miniatura Milady" class="item-image">
+                <div class="item-title">Milady (Estátua Pet)</div>
+            </div>
+
+            <div class="catalog-item" onclick="openModal('Ozzy Osbourne (Miniatura)', 9, 11)">
+                <img src="foto9.jpg" alt="Miniatura Ozzy Osbourne" class="item-image">
+                <div class="item-title">Ozzy Osbourne (Miniatura)</div>
+            </div>
+
+            <div class="catalog-item" onclick="openModal('Neto (Caricatura Humana)', 12, 14)">
+                <img src="foto12.jpg" alt="Miniatura Menino" class="item-image">
+                <div class="item-title">Neto (Caricatura Humana)</div>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle" style="color: #5d5dff;"></h3>
+        <div id="modalImages" class="modal-images">
+            </div>
+    </div>
+</div>
+
+<script>
+    let currentScreen = 0; // 0 = Home, 1 = Reviews, 2 = Catálogo
+    const totalScreens = 3;
+    const wrapper = document.getElementById('mainWrapper');
+    const arrowLeft = document.getElementById('arrowLeft');
+    const arrowRight = document.getElementById('arrowRight');
+    const modal = document.getElementById('imageModal');
+    const modalImagesDiv = document.getElementById('modalImages');
+    const modalTitle = document.getElementById('modalTitle');
+
+    // Função principal para deslizar a tela
+    function slideScreen(direction) {
+        if (direction === 'right' && currentScreen < totalScreens - 1) {
+            currentScreen++;
+        } else if (direction === 'left' && currentScreen > 0) {
+            currentScreen--;
+        }
+
+        // Aplica a translação para mover as telas
+        wrapper.style.transform = `translateX(-${currentScreen * 100}vw)`;
+        updateArrows();
+    }
+
+    // Função para controlar a visibilidade e estado das setas
+    function updateArrows() {
+        // Seta da esquerda (inativa na primeira tela)
+        if (currentScreen === 0) {
+            arrowLeft.classList.add('disabled');
+        } else {
+            arrowLeft.classList.remove('disabled');
+        }
+
+        // Seta da direita (inativa na última tela)
+        if (currentScreen === totalScreens - 1) {
+            arrowRight.classList.add('disabled');
+        } else {
+            arrowRight.classList.remove('disabled');
+        }
+        
+        // Controla a animação de "bounce" na seta da direita
+        if (currentScreen > 0) {
+            arrowRight.style.animation = 'none';
+        } else if (!arrowRight.classList.contains('disabled')) {
+            arrowRight.style.animation = 'bounceRight 2s infinite';
+        }
+    }
+
+    /**
+     * Função para abrir o modal de álbum
+     * @param {string} title - Título do álbum.
+     * @param {number} startNum - Número da primeira foto (ex: 6).
+     * @param {number} endNum - Número da última foto (ex: 8).
+     */
+    function openModal(title, startNum, endNum) {
+        modalTitle.textContent = title;
+        modalImagesDiv.innerHTML = ''; // Limpa imagens anteriores
+        
+        // Loop para inserir as imagens na sequência numérica
+        for (let i = startNum; i <= endNum; i++) {
+            const img = document.createElement('img');
+            img.src = `foto${i}.jpg`; // Padrão: foto6.jpg, foto7.jpg, etc.
+            img.alt = `${title} Foto ${i}`;
+            modalImagesDiv.appendChild(img);
+        }
+
+        modal.style.display = 'block';
+    }
+
+    // Função para fechar o modal
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    // Fechar o modal clicando fora dele
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+    
+    // Inicializa as setas ao carregar a página
+    updateArrows();
+</script>
+
+</body>
+</html>        
+
+gallery-header p { color: #666; font-size: 0.9em; margin-top: 5px;}
         .cards-container {
             display: flex; gap: 20px; overflow-x: auto; padding: 20px 40px;
             max-width: 100%; width: 100%; box-sizing: border-box;
