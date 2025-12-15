@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leo3D Lab</title>
+    <title>Leo3D Lab - Site Completo</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -59,8 +59,22 @@
         }
 
         .arrow:hover { background: #5d5dff; color: white; }
-        .arrow-left { left: 10px; opacity: 0; pointer-events: none; }
+        .arrow-left { left: 10px; }
         .arrow-right { right: 10px; animation: bounceRight 2s infinite; }
+        
+        /* ESTILO PARA SETAS DESATIVADAS */
+        .arrow.disabled {
+            opacity: 0.4;
+            pointer-events: none; /* Não permite clique */
+            cursor: default;
+            box-shadow: none;
+            animation: none !important; /* Remove animação de bounce */
+        }
+        .arrow.disabled:hover {
+            background: white;
+            color: #5d5dff;
+        }
+
 
         @keyframes bounceRight {
             0%, 20%, 50%, 80%, 100% {transform: translateY(-50%) translateX(0);}
@@ -247,168 +261,4 @@
 
     <div class="screen gallery-screen" data-screen="1">
         <div class="gallery-header">
-            <h2>⭐ Galeria de Reviews</h2>
-            <p>Deslize para ver os depoimentos reais dos nossos clientes</p>
-        </div>
-
-        <div class="cards-container">
-            
-            <div class="card">
-                <img src="foto1.jpg" alt="Estátua Pet Branco" class="card-img">
-                <div class="card-body">
-                    <span class="user-name">paularodrigues.0708</span>
-                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="review-text">"Se pudesse dar nota mil, daria com maior gosto! Veio perfeito! Nossa Milady nos deixou e o vendedor me prometeu uma estátua perfeita e veio idêntica."</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="foto2.jpg" alt="Miniatura Ozzy" class="card-img">
-                <div class="card-body">
-                    <span class="user-name">helcioam</span>
-                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="review-text">"Parabéns ao vendedor. Além do acabamento ótimo, tirou todas as dúvidas. Melhor do que eu esperava. Nota 1.000!!!"</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="foto3.jpg" alt="Caricatura Pet" class="card-img">
-                <div class="card-body">
-                    <span class="user-name">6spa7yc34d</span>
-                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="review-text">"Nota mil, idêntico, ficamos super emocionados, pois a caricatura é de um pet muito querido. Trabalho profissional!"</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="foto4.jpg" alt="Boneco Menino" class="card-img">
-                <div class="card-body">
-                    <span class="user-name">elizabethbeth156</span>
-                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="review-text">"Eu amei, gratidão ao vendedor que foi super atencioso. Só elogios, amei agora vou fazer do outro neto, obrigada."</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="foto5.jpg" alt="Boneco Rapaz" class="card-img">
-                <div class="card-body">
-                    <span class="user-name">1di7kc7lrj</span>
-                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="review-text">"Estou apaixonada por essa caricatura, rico em detalhes, ótimo produto e atendimento nota 1000. Super recomendo."</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    
-    <div class="screen catalog-screen" data-screen="2">
-        <div class="gallery-header">
-            <h2>🖼️ Catálogo de Miniaturas Personalizadas</h2>
-            <p>Clique para ver o álbum completo de cada projeto.</p>
-        </div>
-        <div class="catalog-container">
-            
-            <div class="catalog-item" onclick="openModal('Milady (Estátua Pet)', 6, 8)">
-                <img src="foto6.jpg" alt="Miniatura Milady" class="item-image">
-                <div class="item-title">Milady (Estátua Pet)</div>
-            </div>
-
-            <div class="catalog-item" onclick="openModal('Ozzy Osbourne (Miniatura)', 9, 11)">
-                <img src="foto9.jpg" alt="Miniatura Ozzy Osbourne" class="item-image">
-                <div class="item-title">Ozzy Osbourne (Miniatura)</div>
-            </div>
-
-            <div class="catalog-item" onclick="openModal('Neto (Caricatura Humana)', 12, 14)">
-                <img src="foto12.jpg" alt="Miniatura Menino" class="item-image">
-                <div class="item-title">Neto (Caricatura Humana)</div>
-            </div>
-            
-            </div>
-    </div>
-
-</div>
-
-<div id="imageModal" class="modal">
-    <div class="modal-content">
-        <span class="close-button" onclick="closeModal()">&times;</span>
-        <h3 id="modalTitle" style="color: #5d5dff;"></h3>
-        <div id="modalImages" class="modal-images">
-            </div>
-    </div>
-</div>
-
-<script>
-    let currentScreen = 0; // 0 = Home, 1 = Reviews, 2 = Catálogo
-    const totalScreens = 3;
-    const wrapper = document.getElementById('mainWrapper');
-    const arrowLeft = document.getElementById('arrowLeft');
-    const arrowRight = document.getElementById('arrowRight');
-    const modal = document.getElementById('imageModal');
-    const modalImagesDiv = document.getElementById('modalImages');
-    const modalTitle = document.getElementById('modalTitle');
-
-    // Função principal para deslizar a tela
-    function slideScreen(direction) {
-        if (direction === 'right' && currentScreen < totalScreens - 1) {
-            currentScreen++;
-        } else if (direction === 'left' && currentScreen > 0) {
-            currentScreen--;
-        }
-
-        wrapper.style.transform = `translateX(-${currentScreen * 100}vw)`;
-        updateArrows();
-    }
-
-    // Função para controlar a visibilidade das setas
-    function updateArrows() {
-        arrowLeft.style.opacity = currentScreen > 0 ? '1' : '0';
-        arrowLeft.style.pointerEvents = currentScreen > 0 ? 'auto' : 'none';
-
-        arrowRight.style.opacity = currentScreen < totalScreens - 1 ? '1' : '0';
-        arrowRight.style.pointerEvents = currentScreen < totalScreens - 1 ? 'auto' : 'none';
-        
-        if (currentScreen > 0) {
-            arrowRight.style.animation = 'none';
-        }
-    }
-
-    /**
-     * Função para abrir o modal de álbum
-     * @param {string} title - Título do álbum.
-     * @param {number} startNum - Número da primeira foto (ex: 6).
-     * @param {number} endNum - Número da última foto (ex: 8).
-     */
-    function openModal(title, startNum, endNum) {
-        modalTitle.textContent = title;
-        modalImagesDiv.innerHTML = ''; // Limpa imagens anteriores
-        
-        // Loop para inserir as imagens na sequência numérica
-        for (let i = startNum; i <= endNum; i++) {
-            const img = document.createElement('img');
-            img.src = `foto${i}.jpg`; // Usa o novo padrão: foto6.jpg, foto7.jpg, etc.
-            img.alt = `${title} Foto ${i}`;
-            modalImagesDiv.appendChild(img);
-        }
-
-        modal.style.display = 'block';
-    }
-
-    // Função para fechar o modal
-    function closeModal() {
-        modal.style.display = 'none';
-    }
-
-    // Fechar o modal clicando fora dele
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            closeModal();
-        }
-    }
-    
-    // Inicializa as setas na primeira tela
-    updateArrows();
-</script>
-
-</body>
-</html>
 
